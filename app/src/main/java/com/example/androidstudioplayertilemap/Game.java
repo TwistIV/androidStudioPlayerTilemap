@@ -18,11 +18,15 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     Game(Context context){
         super(context);
 
+        // Create surfaceholder object to draw to
         SurfaceHolder surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
 
+        // Create gameLoop object that runs updates and draws to the surface at the specified FPS
+        // Takes in the current class and the surfaceHolder
         this.gameLoop = new GameLoop(this, surfaceHolder);
 
+        //Creates player with position and size
         this.player = new Player(getContext(), 500, 500, 100);
 
         this.joystick = new Joystick(150, 900, 100, 75);
@@ -30,6 +34,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         setFocusable(true);
     }
 
+    // Make updates to player position on a touch event
     @Override
     public boolean onTouchEvent(MotionEvent event){
         switch(event.getAction()){
@@ -59,15 +64,24 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
+    // Draws the fps counter on the screen by getting the average FPS
+    // from the averageFPS field withing the gameLoop class
     public void drawFPS(Canvas canvas){
+        //Gets averageFPS from gameLoop class
         String averageFPS = Integer.toString(gameLoop.averageFPS);
+
+        //paint object to paint on screen
         Paint paint = new Paint();
         int color = ContextCompat.getColor(getContext(), R.color.magenta);
         paint.setColor(color);
         paint.setTextSize(40);
+
+        // Draw the text to the canvas
         canvas.drawText("FPS: " + averageFPS, 100,40, paint);
     }
 
+    // draw to canvas every frame
+    //this draw method is called from the gameLoop class at the specified FPS
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
@@ -76,6 +90,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         joystick.draw(canvas);
     }
 
+    // update class info every frame
+    // this update method is called from the gameLoop class at the specified FPS
     public void update() {
         joystick.update();
         player.update();

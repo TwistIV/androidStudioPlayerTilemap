@@ -45,7 +45,7 @@ public class GameLoop extends Thread{
                 timer += (currentTime - lastTime);
                 lastTime = currentTime;
 
-                // runs loop if frame interval has passed
+                // runs gameLoop if frame interval has passed
                 if (delta >= 1) {
                     canvas = surfaceHolder.lockCanvas();
                     game.update();
@@ -61,7 +61,7 @@ public class GameLoop extends Thread{
                     frameCount++;
                 }
 
-                // updates FPS every second
+                // updates averageFPS field every second
                 if(timer >= 1000000000){
                     averageFPS = frameCount;
                     frameCount = 0;
