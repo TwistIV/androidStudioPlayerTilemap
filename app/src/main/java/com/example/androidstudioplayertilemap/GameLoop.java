@@ -45,7 +45,7 @@ public class GameLoop extends Thread{
                 timer += (currentTime - lastTime);
                 lastTime = currentTime;
 
-                // runs gameLoop if frame interval has passed
+                // runs gameloop if frame interval has passed
                 if (delta >= 1) {
                     canvas = surfaceHolder.lockCanvas();
                     game.update();

@@ -14,6 +14,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private GameLoop gameLoop;
     private final Player player;
     private final Joystick joystick;
+    private final Dpad dpad;
 
     Game(Context context){
         super(context);
@@ -30,6 +31,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         this.player = new Player(getContext(), 500, 500, 100);
 
         this.joystick = new Joystick(150, 900, 100, 75);
+        this.dpad = new Dpad(300, 800, 50);
 
         setFocusable(true);
     }
@@ -39,10 +41,20 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public boolean onTouchEvent(MotionEvent event){
         switch(event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                player.setPosition((int) event.getX(), (int) event.getY());
+                //player.setPosition((int) event.getX(), (int) event.getY());
+                if (dpad.isPressed((double) event.getX(), (double) event.getY())){
+
+                }
+
                 return true;
             case MotionEvent.ACTION_MOVE:
-                player.setPosition((int) event.getX(), (int) event.getY());
+                //player.setPosition((int) event.getX(), (int) event.getY());
+                if (dpad.isPressed((double) event.getX(), (double) event.getY())){
+
+                }
+                return true;
+            case MotionEvent.ACTION_UP:
+                dpad.setIsPressed(false);
                 return true;
         }
 
@@ -87,13 +99,15 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         super.draw(canvas);
         drawFPS(canvas);
         player.draw(canvas);
-        joystick.draw(canvas);
+        //joystick.draw(canvas);
+        dpad.draw(canvas);
     }
 
     // update class info every frame
     // this update method is called from the gameLoop class at the specified FPS
     public void update() {
-        joystick.update();
+        //joystick.update();
+        dpad.update();
         player.update();
     }
 }
